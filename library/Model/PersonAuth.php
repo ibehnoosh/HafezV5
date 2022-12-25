@@ -6,7 +6,7 @@ namespace App\Model;
 
 class PersonAuth extends Model
 {
-    public function show_menu(int $id, string $url): string
+    public function showMenu(int $id, string $url): string
 
     {
         $class='';$output='';
@@ -45,14 +45,14 @@ class PersonAuth extends Model
                             </a>
                             <ul class="sub-menu">
                             HTML;
-            $output.=$this->show_submenu($row->id, $id, $url);
+            $output.=$this->showSubmenu($row->id, $id, $url);
             $output.= '</ul>
             </li>';
         }
         return $output;
     }
 
-    public function show_submenu(int $group, int $person, string $url) : string
+    public function showSubmenu(int $group, int $person, string $url) : string
 
     {
         $class=''; $output='';
@@ -79,6 +79,70 @@ class PersonAuth extends Model
                             HTML;
         }
         return $output;
+    }
+
+    public function isAccess(string $menu,int $person){
+        $permision=0;
+        if(isset($menu))
+        {
+            $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like :menu";
+            $stmt= $this->DB->prepare($sql);
+            $stmt->execute(['menu'=>$menu]);
+            $res=$stmt->fetch(\PDO::FETCH_OBJ);
+            if ($res && $res->id == 0) {
+                $i = 0;
+                $permision_sum = 0;
+                $center_list = '0';
+                $ar_per = array();
+                $sql_submenu="SELECT `parent` FROM `p_menu_sub` WHERE `url` like ?";
+                $stmt_submenu= $this->DB->prepare($sql_submenu);
+                $stmt_submenu->execute([$menu]);
+                $row_parent=$stmt_submenu->fetch(\PDO::FETCH_OBJ);
+                if ($row_parent) {
+                    $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =: person AND `menu` = :menu";
+                    $stmt_permision= $this->DB->prepare($sql_permision);
+                    $stmt_permision->execute(['menu'=>$menu,'person'=>$person]);
+                    $row_permision=$stmt->fetch(\PDO::FETCH_OBJ);
+                    foreach ($row_permision as $row ) {
+                        $ar_per[$i][0] = $center = $row->center;
+                        $ar_per[$i][1] = $permision = $row->permision;
+                        $i++;
+                        $permision_sum += $permision;
+                        $center_list .= ',' . $center;
+                    }
+                }
+                else {
+                    $permision = 0;
+                }
+
+            } else
+            {
+                $i = 0;
+                $permision_sum = 0;
+                $center_list = '0';
+                $ar_per = array();
+                $id = $res->id ?? 0;
+                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` = :person AND `menu` = :menu";
+                $stmt_permision= $this->DB->prepare($sql_permision);
+                $stmt_permision->execute(['menu'=>$id,'person'=>$person]);
+                $row_permision=$stmt_permision->fetchAll(\PDO::FETCH_OBJ);
+                foreach ($row_permision as $row ) {
+
+                    $ar_per[$i][0] = $center = $row->center;
+                    $ar_per[$i][1] = $permision = $row->permision;
+                    $i++;
+                    $permision_sum += $permision;
+                    $center_list .= ',' . $center;
+                }
+            }
+        }
+        else {
+            $permision = 0;
+        }
+
+
+        return $permision > 0 ? array($id, $i, $permision, $center_list, $ar_per) :  array(0, 0, 0, 0, 0);
+
     }
 
 }

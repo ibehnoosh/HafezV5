@@ -7,14 +7,11 @@ use App\Tools\logger;
 use App\Model\Person;
 use App\Model\PersonAuth;
 use View\Person\index;
-
-
+use \View\General\Error;
 $dateOb=new Date();
 
 /*
 require_once "../library/login/makeSecure_person.php";
-$key_encrypte = "i10veY0u";
-$pur = new HTMLPurifier();
 */
 $_SESSION[PREFIXOFSESS . 'idp']=1;
 $person = new Person();
@@ -40,7 +37,7 @@ if (isset($_REQUEST['screen'])) {
     }
 
     $url = $_REQUEST['screen'];
-    list($menuId, $numOfI, $permision, $centerList, $ar_per) = $personAuth->is_access($menu_to_show, $_SESSION[PREFIXOFSESS . 'idp']);
+    list($menuId, $numOfI, $permision, $centerList, $ar_per) = $personAuth->isAccess($menu_to_show, $_SESSION[PREFIXOFSESS . 'idp']);
     settype($permision, 'integer');
     $_SESSION[PREFIXOFSESS . 'ar_per'] = $ar_per;
     $_SESSION[PREFIXOFSESS . 'numOfI'] = $numOfI;
@@ -61,13 +58,9 @@ if (isset($_REQUEST['screen'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <?php
-
-   print (new index())->mainIndex();
+        print (new index())->mainIndex();
     ?>
-
-
 </head>
-
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
     <input type="hidden" name="url_show" id="url_show" value="<?=$url?>">
     <div class="page-header navbar navbar-fixed-top">
@@ -76,12 +69,12 @@ if (isset($_REQUEST['screen'])) {
                 <a href="index.php"><?=TITLECENTER?></a>
                 <div class="menu-toggler sidebar-toggler e"> </div>
             </div>
-            <a href="javascript:;" class="menu-toggler responsive-toggler e" data-toggle="collapse"
+            <a href="javascript:" class="menu-toggler responsive-toggler e" data-toggle="collapse"
                 data-target=".navbar-collapse"> </a>
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-user">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                             data-close-others="true">
                             <span class="username username-hide-on-mobile e"><?=$person->family_per?></span>
                             <i class="fa fa-angle-down"></i>
@@ -123,25 +116,24 @@ if (isset($_REQUEST['screen'])) {
                             <span class="title"><?=$HTML['HomePage']?></span>
                         </a>
                     </li>
-                    <?php print $personAuth->show_menu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
+                    <?php print $personAuth->showMenu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
                 </ul>
             </div>
         </div>
-        <div class="page-content-wrapper">
+        <div class="page-content-wrapper"><div class="page-content">
             <?php
             if ($permision) {
-                include $include;
+                if(file_exists($include)){
+                    include $include;
+                }else {
+                    print (Error::show(['title' => $ERROR['error'] , 'description'=> $ERROR['noFile']]));
+                    }
             } else {
-                print <<<HTML
-                        <div class="page-content">
-                            <div class="note note-info"><strong>خطا</strong></div>
-                            <div class="tabbable-line"><div class="alert alert-danger">{$ERROR['noAddress']}</div></div></div>
-                        HTML;
+                print (Error::show(['title' => $ERROR['error'], 'description'=> $ERROR['noAddress']]));
             }
-
             ?>
-        </div>
-        <a href="javascript:;" class="page-quick-sidebar-toggler">
+            </div></div>
+        <a href="javascript:" class="page-quick-sidebar-toggler">
             <i class="icon-login"></i>
         </a>
     </div>
