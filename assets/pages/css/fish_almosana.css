@@ -1,0 +1,28 @@
+
+
+table.register_fish_print
+{
+	background:url(../img/print.png)!important;
+}
+
+
+table.register_fish_print td , table.register_fish_print td table td, table.register_fish_print td table td table td , table.register_fish_print td table td table td strong
+{
+	
+	font-family:"Zar";
+	font-size:16px;
+	line-height:25px;
+}
+table.register_fish td , table.register_fish td table td, table.register_fish td table td table td, table.register_fish td table td table td strong
+{
+	font-family:"Zar";
+	font-size:16px;
+	font-size-adjust:!important 16px;
+	line-height:27px;
+}
+table.register_fish_edit td , table.register_fish_edit td table td, table.register_fish_edit td table td table td , table.register_fish_edit td table td table td STRONG
+{
+	font-family:"Zar";
+	font-size:16px;
+	line-height:25px;
+}

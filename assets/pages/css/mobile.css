@@ -1,0 +1,56 @@
+/* CSS Document */
+*
+{
+	font-size:3vw;
+}
+@media (max-width: 500px) {
+.form-wizard .progress {
+  margin-bottom: 10px; }
+.form-wizard .steps li
+	{
+		float:right;
+	}
+.form-wizard .steps {
+  padding: 5px 0;
+  margin-bottom: 5px;
+  background-color: #fff;
+  background-image: none;
+  filter: none;
+  border: 0px;
+  box-shadow: none; }
+  .form-wizard .steps > li > a.step {
+    background-color: #fff;
+    background-image: none;
+    filter: none;
+    border: 0px;
+    box-shadow: none;
+	padding:0px;
+	margin:0px; }
+    .form-wizard .steps > li > a.step:hover {
+      background: none; }
+    .form-wizard .steps > li > a.step > .number {
+      background-color: #eee;
+      display: inline-block;
+      text-align: center !important;
+      font-size: 10px;
+      font-weight: 300;
+      padding:10px;
+      margin-left: 10px;
+      height: 25px;
+      width: 25px;
+      -webkit-border-radius: 50% !important;
+      -moz-border-radius: 50% !important;
+      border-radius: 50% !important; }
+    
+  .form-wizard .steps > li.active > a.step .number {
+    background-color: #36c6d3;
+    color: #fff; }
+  .form-wizard .steps > li.done > a.step .number {
+    background-color: #F1C40F;
+    color: #fff; }
+	}
+
+.mobile_table thead tr th
+{
+	font-size:3vw;
+}
