@@ -1,10 +1,14 @@
 <?php
 require '../Boot.php';
-
+$HTML = require '../Lang/general.php';
+$ERROR= require '../Lang/error.php';
 use App\Tools\Date;
 use App\Tools\logger;
-use View\Person\index;
 use App\Model\Person;
+use App\Model\PersonAuth;
+use View\Person\index;
+
+
 $dateOb=new Date();
 
 /*
@@ -12,12 +16,14 @@ require_once "../library/login/makeSecure_person.php";
 $key_encrypte = "i10veY0u";
 $pur = new HTMLPurifier();
 */
-
+$_SESSION[PREFIXOFSESS . 'idp']=1;
 $person = new Person();
-$person->show(1);
+$person->show($_SESSION[PREFIXOFSESS . 'idp']);
+
+$personAuth=new PersonAuth();
+
 $logg = new logger();
-//$per->show($_SESSION[PREFIXOFSESS . 'userNamePerson']);
-//$_SESSION[PREFIXOFSESS . 'idp'] = $per->id_per;
+
 $access = true;
 
 $myIp= $_SERVER['REMOTE_ADDR'];
@@ -34,7 +40,7 @@ if (isset($_REQUEST['screen'])) {
     }
 
     $url = $_REQUEST['screen'];
-    list($menuId, $numOfI, $permision, $centerList, $ar_per) = $per->is_access($menu_to_show, $_SESSION[PREFIXOFSESS . 'idp']);
+    list($menuId, $numOfI, $permision, $centerList, $ar_per) = $personAuth->is_access($menu_to_show, $_SESSION[PREFIXOFSESS . 'idp']);
     settype($permision, 'integer');
     $_SESSION[PREFIXOFSESS . 'ar_per'] = $ar_per;
     $_SESSION[PREFIXOFSESS . 'numOfI'] = $numOfI;
@@ -43,6 +49,7 @@ if (isset($_REQUEST['screen'])) {
 } else {
     $menu = $include = "index_default_" . PREFIXOFSESS . ".php";
     $permision = true;
+    $url='';
 }
 
 ?>
@@ -76,18 +83,18 @@ if (isset($_REQUEST['screen'])) {
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                             data-close-others="true">
-                            <span class="username username-hide-on-mobile e"><?=$per->family_per?></span>
+                            <span class="username username-hide-on-mobile e"><?=$person->family_per?></span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
                                 <a href="index.php?screen=info/setting/myinfo">
-                                    <i class="icon-user"></i>مشخصات من </a>
+                                    <i class="icon-user"></i><?=$HTML['MyInfo']?> </a>
                             </li>
                             <li class="divider"> </li>
                             <li>
                                 <a href="login.php?msg=3">
-                                    <i class="icon-key"></i> خروج </a>
+                                    <i class="icon-key"></i> <?=$HTML['LogOut']?>  </a>
                             </li>
                         </ul>
                     </li>
@@ -113,10 +120,10 @@ if (isset($_REQUEST['screen'])) {
                     <li class="nav-item start">
                         <a href="index.php" class="nav-link nav-toggle">
                             <i class="icon-home"></i>
-                            <span class="title">صفحه اصلی</span>
+                            <span class="title"><?=$HTML['HomePage']?></span>
                         </a>
                     </li>
-                    <?php //$per->show_menu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
+                    <?php print $personAuth->show_menu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
                 </ul>
             </div>
         </div>
@@ -125,9 +132,11 @@ if (isset($_REQUEST['screen'])) {
             if ($permision) {
                 include $include;
             } else {
-                print '<div class="page-content">
+                print <<<HTML
+                        <div class="page-content">
                             <div class="note note-info"><strong>خطا</strong></div>
-                            <div class="tabbable-line"><div class="alert alert-danger">آدرس موجود نیست.</div></div></div>';
+                            <div class="tabbable-line"><div class="alert alert-danger">{$ERROR['noAddress']}</div></div></div>
+                        HTML;
             }
 
             ?>

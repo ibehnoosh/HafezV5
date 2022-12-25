@@ -1,15 +1,20 @@
 <?php
 namespace App\Tools;
 
-class logger
+class Logger
 {
-	function add($who , $operation , $what , $details , $key=0)
+    private $DB;
+    public function __construct()
+    {
+        $this->DB= new Database();
+    }
+
+	function add(int $who , string $operation ,string $what ,string $details , $key=0) : void
 	{
 		$details=str_replace("'","",$details);
-		$sql_in="INSERT INTO `logg` (`id`, `who`, `operation`, `what`, `details`,`key`, `date`) VALUES
-		(NULL, '".$who."', '".$operation."', '".$what."', '".$details."','".$key."', NOW());";
-		
-		mysql_query($sql_in);
+		$stmt=$this->DB->prepare("INSERT INTO `logg` (`id`, `who`, `operation`, `what`, `details`,`key`, `date`) 
+                                        VALUES (NULL, ?,?,?,?,?,NOW())");
+        $stmt->execute ([$who,$operation,$what,$details,$key]);
 	}
 	
 }

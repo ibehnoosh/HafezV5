@@ -13,6 +13,6 @@ class Database extends \PDO
         $dbuser = DBUSER;
         $dbpass = DBPASS;
         $dbtype = 'mysql';
-        parent::__construct($dbtype . ':host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
+        parent::__construct($dbtype . ':host=' . $dbhost . ';port=3008; dbname=' . $dbname, $dbuser, $dbpass);
     }
 }

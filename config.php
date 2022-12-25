@@ -1,6 +1,6 @@
 <?php
 if (!defined('DBHOST')) {
-    define('DBHOST', 'mysql:host=localhost:3008;dbname=hafez');
+    define('DBHOST', 'localhost');
 }
 
 if (!defined('DBUSER')) {
@@ -12,7 +12,7 @@ if (!defined('DBPASS')) {
 }
 
 if (!defined('DBNAME')) {
-    define('DBNAME', 'hafez.v3');
+    define('DBNAME', 'hafez');
 }
 
 if (!defined('FIRSTTERMDTOFEE')) {
