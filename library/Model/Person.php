@@ -1,14 +1,11 @@
 <?php
 namespace App\Model;
 
-use App\Tools\DB;
-
 class Person
 {
     private $DB;
     public function __construct()
     {
-        $this->DB=new DB();
     }
 
     public function list_fld():array
@@ -28,22 +25,23 @@ class Person
       // $fld = $this->list_fld();
         $sql= 'select * from person_info where  id_per = 1';
         var_dump($this->DB);
-       // $stmt=$this->DB->query($sql);
-/*
-        $stmt->bindValue("id", $id);
-        $stmt->executeQuery();
-        $row =$stmt->fetchAssociative();
+       //$stmt=$this->DB->query($sql);
 
-        foreach ($fld as $key => $val) {
-            if ($row[$val] == '0000-00-00') {
-                $real_value = '';
-            } else {
-                $real_value = $row[$val];
-            }
+        //$stmt->bindValue("id", $id);
+        /*        $stmt->executeQuery();
+                $row =$stmt->fetchAssociative();
+                r_dump($row);
+        /*
+                foreach ($fld as $key => $val) {
+                    if ($row[$val] == '0000-00-00') {
+                        $real_value = '';
+                    } else {
+                        $real_value = $row[$val];
+                    }
 
-            $this->$val = $real_value;
-        }
-*/
+                    $this->$val = $real_value;
+                }
+        */
     }
 
     public function show_menu($id, $url) //ok

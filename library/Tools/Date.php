@@ -20,7 +20,7 @@ class Date {
     function thisYear()
     {
         $year=date("Y");
-        list($yearPersian,$monthPersian,$dayPersian)= $this->converetToPersian($year,$month,$day);
+        list($yearPersian,$monthPersian,$dayPersian)= $this->converetToPersian($year,1,1);
         return $yearPersian;
     }
     function dateLog($yearPersian,$monthPersian ,$dayPersian):string
