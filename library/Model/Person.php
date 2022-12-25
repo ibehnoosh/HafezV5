@@ -1,28 +1,38 @@
 <?php
 namespace App\Model;
 
-class person
+use App\Tools\DB;
+
+class Person
 {
-    public function list_fld() //ok
+    private $DB;
+    public function __construct()
+    {
+        $this->DB=new DB();
+    }
+
+    public function list_fld():array
 
     {
         $fld = array();
-        $result = mysql_query('select * from person_info LIMIT 0 ,1');
-
-        for ($i = 0; $i < mysql_num_fields($result); $i++) {
-            $name = mysql_field_name($result, $i);
-            array_push($fld, $name);
+        $columns = $this->DB->listTableColumns('person_info');
+        foreach ($columns as $column) {
+            array_push($fld, $column->getName());
         }
         return $fld;
     }
 
-    public function show_id($id) //ok
+    public function show($id) //ok
 
     {
-        $fld = array();
-        $fld = $this->list_fld();
-        $result = mysql_query('select * from person_info where  id_per=' . $id);
-        $row = mysql_fetch_array($result);
+      // $fld = $this->list_fld();
+        $sql= 'select * from person_info where  id_per = 1';
+        var_dump($this->DB);
+       // $stmt=$this->DB->query($sql);
+/*
+        $stmt->bindValue("id", $id);
+        $stmt->executeQuery();
+        $row =$stmt->fetchAssociative();
 
         foreach ($fld as $key => $val) {
             if ($row[$val] == '0000-00-00') {
@@ -33,30 +43,13 @@ class person
 
             $this->$val = $real_value;
         }
-    }
-    public function show($user) //ok
-
-    {
-        $fld = array();
-        $fld = $this->list_fld();
-        $result = mysql_query("select * from person_info where  username_per='" . $user . "'");
-        $row = mysql_fetch_array($result);
-
-        foreach ($fld as $key => $val) {
-            if ($row[$val] == '0000-00-00') {
-                $real_value = '';
-            } else {
-                $real_value = $row[$val];
-            }
-
-            $this->$val = $real_value;
-        }
+*/
     }
 
     public function show_menu($id, $url) //ok
 
     {
-        $sql = mysql_query("SELECT
+        $sql = $this->DB->query("SELECT
 			`p_menu_group`.`id`,`p_menu_group`.`name`,`icon`
 			FROM
 			`p_person_access`, `p_menu_option`,`p_menu_group`
@@ -69,7 +62,7 @@ class person
 			GROUP BY `p_menu_group`.`id`
 			ORDER BY `p_menu_group`.`order` ASC ");
         while ($row = mysql_fetch_object($sql)) {
-            $sql_active_open = mysql_query("SELECT `group` FROM `p_menu_option` WHERE `url`='" . $url . "'");
+            $sql_active_open = $this->DB->query("SELECT `group` FROM `p_menu_option` WHERE `url`='" . $url . "'");
             $rr = mysql_fetch_object($sql_active_open);
             if ($row->id == $rr->group) {
                 $clas = 'active open';
@@ -95,7 +88,7 @@ class person
 
     {
 
-        $sql = mysql_query("SELECT DISTINCT `name` , `url`
+        $sql = $this->DB->query("SELECT DISTINCT `name` , `url`
 		FROM  `p_person_access`, `p_menu_option`
 		WHERE `person` = " . $person . "
 		AND `permision`>0
@@ -121,18 +114,18 @@ class person
 
     {
         if ($menu != '') {
-            $sql = mysql_query("SELECT `id` FROM `p_menu_option` WHERE `url` LIKE '" . $menu . "'");
+            $sql = $this->DB->query("SELECT `id` FROM `p_menu_option` WHERE `url` LIKE '" . $menu . "'");
             $num = mysql_num_rows($sql);
             if ($num == 0) {
                 $i = 0;
                 $permision_sum = 0;
                 $center_list = '0';
                 $ar_per = array();
-                $sql_submenu = mysql_query("SELECT `parent` FROM `p_menu_sub` WHERE `url` ='" . $menu . "'");
+                $sql_submenu = $this->DB->query("SELECT `parent` FROM `p_menu_sub` WHERE `url` ='" . $menu . "'");
                 $row_parent = mysql_fetch_object($sql_submenu);
                 $id = $row_parent->parent;
                 if ($id != '') {
-                    $sql_permision = mysql_query("SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =" . $person . " AND `menu` =" . $id);
+                    $sql_permision = $this->DB->query("SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =" . $person . " AND `menu` =" . $id);
                     while ($row = mysql_fetch_object($sql_permision)) {
                         $ar_per[$i][0] = $center = $row->center;
                         $ar_per[$i][1] = $permision = $row->permision;
@@ -151,7 +144,7 @@ class person
                 $ar_per = array();
                 $res = mysql_fetch_object($sql);
                 $id = $res->id;
-                $sql_permision = mysql_query("SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =" . $person . " AND `menu` =" . $id);
+                $sql_permision = $this->DB->query("SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =" . $person . " AND `menu` =" . $id);
                 while ($row = mysql_fetch_object($sql_permision)) {
                     $ar_per[$i][0] = $center = $row->center;
                     $ar_per[$i][1] = $permision = $row->permision;
@@ -184,7 +177,7 @@ class person
 
     public function center_list($selected)
     {
-        $sql1 = mysql_query("SELECT * FROM `basic_center` ORDER BY `basic_center`.`name_b_center` ASC ");
+        $sql1 = $this->DB->query("SELECT * FROM `basic_center` ORDER BY `basic_center`.`name_b_center` ASC ");
         print '<option value="all">-انتخاب-</option>';
         while ($row1 = mysql_fetch_object($sql1)) {
             if ($row1->id_b_center == $selected) {
@@ -208,7 +201,7 @@ class person
 
     public function witch_center($id)
     {
-        $sql = mysql_query("SELECT `name` FROM `p_center` WHERE `id` =" . $id);
+        $sql = $this->DB->query("SELECT `name` FROM `p_center` WHERE `id` =" . $id);
         $row = mysql_fetch_object($sql);
         return $row->name;
     }
@@ -222,7 +215,7 @@ class person
         }
 
         //print $sql;
-        $res = mysql_query($sql);
+        $res = $this->DB->query($sql);
         while ($row = mysql_fetch_object($res)) {
             if ($row->id_b_center == $selected) {
                 print '<option value="' . $row->id_b_center . '" selected="selected">' . $row->name . '</option>';
@@ -245,7 +238,7 @@ class person
 
         $sql = "SELECT * FROM `basic_center`  WHERE `id_b_center` IN (0" . $cen . ") ";
 
-        $res = mysql_query($sql);
+        $res = $this->DB->query($sql);
         while ($row = mysql_fetch_object($res)) {
             if ($row->id_b_center == $selected) {
                 print '<option value="' . $row->id_b_center . '" selected="selected">' . $row->name_b_center . '</option>';
@@ -267,7 +260,7 @@ class person
 
         $sql = "SELECT * FROM `basic_center`  WHERE `id_b_center` IN (0" . $cen . ") ";
 
-        $res = mysql_query($sql);
+        $res = $this->DB->query($sql);
         while ($row = mysql_fetch_object($res)) {
             if ($row->id_b_center == $selected) {
                 print '<option value="' . $row->id_b_center . '" selected="selected">' . $row->name_b_center . '</option>';
@@ -286,7 +279,7 @@ class person
             $sql = "SELECT group_concat(`center`) AS `c`  FROM `p_person_access` WHERE `permision` > 0 AND `person` =" . $user . " AND `menu` = " . $menu;
         }
 
-        $res = mysql_query($sql);
+        $res = $this->DB->query($sql);
         $row = mysql_fetch_object($res);
         return $row->c;
     }

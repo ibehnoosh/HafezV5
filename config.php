@@ -1,6 +1,6 @@
 <?php
 if (!defined('DBHOST')) {
-    define('DBHOST', 'localhost');
+    define('DBHOST', 'mysql:host=localhost;dbname=hafez');
 }
 
 if (!defined('DBUSER')) {

@@ -4,7 +4,7 @@ require '../Boot.php';
 use App\Tools\Date;
 use App\Tools\logger;
 use View\Person\index;
-use App\Model\person;
+use App\Model\Person;
 $dateOb=new Date();
 
 /*
@@ -13,10 +13,11 @@ $key_encrypte = "i10veY0u";
 $pur = new HTMLPurifier();
 */
 
-$per = new person;
+$person = new Person();
+$person->show(1);
 $logg = new logger();
-$per->show($_SESSION[PREFIXOFSESS . 'userNamePerson']);
-$_SESSION[PREFIXOFSESS . 'idp'] = $per->id_per;
+//$per->show($_SESSION[PREFIXOFSESS . 'userNamePerson']);
+//$_SESSION[PREFIXOFSESS . 'idp'] = $per->id_per;
 $access = true;
 
 $myIp= $_SERVER['REMOTE_ADDR'];
@@ -115,23 +116,21 @@ if (isset($_REQUEST['screen'])) {
                             <span class="title">صفحه اصلی</span>
                         </a>
                     </li>
-                    <?php $per->show_menu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
+                    <?php //$per->show_menu($_SESSION[PREFIXOFSESS . 'idp'], $url);?>
                 </ul>
             </div>
         </div>
         <div class="page-content-wrapper">
             <?php
-if ($permision) {
-    include $include;
-} else {
-    print '<div class="page-content">
-                <div class="note note-info"><strong>خطا</strong></div>
-                <div class="tabbable-line"><div class="alert alert-danger">آدرس موجود نیست.</div></div></div>';
-}
+            if ($permision) {
+                include $include;
+            } else {
+                print '<div class="page-content">
+                            <div class="note note-info"><strong>خطا</strong></div>
+                            <div class="tabbable-line"><div class="alert alert-danger">آدرس موجود نیست.</div></div></div>';
+            }
 
-?>
-
-
+            ?>
         </div>
         <a href="javascript:;" class="page-quick-sidebar-toggler">
             <i class="icon-login"></i>
@@ -145,5 +144,4 @@ if ($permision) {
         </div>
     </div>
 </body>
-
 </html>
