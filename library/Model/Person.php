@@ -1,9 +1,12 @@
 <?php
 namespace App\Model;
+use App\Enums;
 
 class Person extends Model
 {
-    public function list_fld(): array
+    public Enums\educationStatus $educationStatus;
+
+    private function list_fld(): array
     {
         $q = $this->DB->prepare("DESCRIBE person_info");
         $q->execute();
@@ -11,7 +14,15 @@ class Person extends Model
 
         return $table_fields;
     }
-
+    private function createProperties():void
+    {
+        $fld = $this->list_fld();
+        foreach($fld as $column)
+        {
+            $filed=$column['Field'];
+            $this->{$filed};
+        }
+    }
     public function show(int $id ): void
     {
         $fld = $this->list_fld();
@@ -22,8 +33,10 @@ class Person extends Model
         {
             $filed=$column['Field'];
             $data[$filed] == '0000-00-00' ? $real_value = '' :$real_value = $data[$filed];
-            $this->$filed = $real_value;
+            $this->{$filed} = $real_value;
         }
+        print $this->degree_per;
+       print Enums\educationStatus::ms;
     }
 
 
@@ -164,4 +177,5 @@ class Person extends Model
         }
         return $gender_name;
     }
+
 }

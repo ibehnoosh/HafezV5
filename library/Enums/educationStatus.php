@@ -18,6 +18,7 @@ enum educationStatus: int
             self::ms => 'فوق لیسانس',
             self::phd => 'دکترا',
             default => ''
+
         };
     }
 }
