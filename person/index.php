@@ -2,6 +2,7 @@
 require '../Boot.php';
 $HTML = require '../Lang/general.php';
 $ERROR= require '../Lang/error.php';
+
 use App\Tools\Date;
 use App\Tools\logger;
 use App\Model\Person;

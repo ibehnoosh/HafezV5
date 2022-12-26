@@ -81,7 +81,7 @@ class PersonAuth extends Model
         return $output;
     }
 
-    public function isAccess(string $menu,int $person){
+    public function isAccess(string $menu,int $person): array{
         $permision=0;
         if(isset($menu))
         {
