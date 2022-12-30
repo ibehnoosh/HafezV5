@@ -57,21 +57,20 @@ class PersonAuth extends Model
         $sql=<<<SQL
                 SELECT DISTINCT `name` , `url`
                         FROM  `p_person_access`, `p_menu_option`
-                        WHERE `person` = :person
+                        WHERE `person` = ?
                         AND `permision`>0
-                        AND `group`= :group 
+                        AND `group`= ?
                         AND `p_menu_option`.`id`=`p_person_access`.`menu` ORDER BY `order`
                 SQL;
-        $stmtUrl = $this->DB->prepare($sql);
-        $stmtUrl->execute(['person'=> $person, ':group'=> $group]);
-        $dataUrl=$stmtUrl->fetchAll(\PDO::FETCH_OBJ);
+        $stmtUrl = $this->DB->executeQuery($sql,[$person,$group]);
+        $dataUrl=$stmtUrl->fetchAllAssociative();
         foreach ($dataUrl as $row) {
-                ($url == $row->url) ?? $class='active open';
+                ($url == $row['url']) ?? $class='active open';
 
             $output.=<<<HTML
                             <li class="nav-item {$class}">
-                            <a href="index.php?screen={$row->url}" class="nav-link ">
-                            <span class="">{$row->name}</span>
+                            <a href="index.php?screen={$row['url']}" class="nav-link ">
+                            <span class="">{$row['name']}</span>
                             </a>
                             </li>
                             HTML;
@@ -83,27 +82,25 @@ class PersonAuth extends Model
         $permision=0;
         if(isset($menu))
         {
-            $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like :menu";
-            $stmt= $this->DB->prepare($sql);
-            $stmt->execute(['menu'=>$menu]);
-            $res=$stmt->fetch(\PDO::FETCH_OBJ);
-            if ($res && $res->id == 0) {
+            $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like ?";
+            $stmt= $this->DB->executeQuery($sql,[$menu]);
+            $res=$stmt->fetchAssociative();
+            if ($res && $res['id'] == 0) {
                 $i = 0;
                 $permision_sum = 0;
                 $center_list = '0';
                 $ar_per = array();
                 $sql_submenu="SELECT `parent` FROM `p_menu_sub` WHERE `url` like ?";
-                $stmt_submenu= $this->DB->prepare($sql_submenu);
-                $stmt_submenu->execute([$menu]);
-                $row_parent=$stmt_submenu->fetch(\PDO::FETCH_OBJ);
+                $stmt_submenu= $this->DB->executeQuery($sql_submenu,[$menu]);
+                $row_parent=$stmt_submenu->fetchAssociative();
+                var_dump($row_parent);
                 if ($row_parent) {
-                    $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =: person AND `menu` = :menu";
-                    $stmt_permision= $this->DB->prepare($sql_permision);
-                    $stmt_permision->execute(['menu'=>$menu,'person'=>$person]);
-                    $row_permision=$stmt->fetch(\PDO::FETCH_OBJ);
+                    $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
+                    $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$menu]);
+                    $row_permision=$stmt_permision->fetchAllAssociative();
                     foreach ($row_permision as $row ) {
-                        $ar_per[$i][0] = $center = $row->center;
-                        $ar_per[$i][1] = $permision = $row->permision;
+                        $ar_per[$i][0] = $center = $row['center'];
+                        $ar_per[$i][1] = $permision = $row['permision'];
                         $i++;
                         $permision_sum += $permision;
                         $center_list .= ',' . $center;
@@ -119,15 +116,14 @@ class PersonAuth extends Model
                 $permision_sum = 0;
                 $center_list = '0';
                 $ar_per = array();
-                $id = $res->id ?? 0;
-                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` = :person AND `menu` = :menu";
-                $stmt_permision= $this->DB->prepare($sql_permision);
-                $stmt_permision->execute(['menu'=>$id,'person'=>$person]);
-                $row_permision=$stmt_permision->fetchAll(\PDO::FETCH_OBJ);
+                $id = $res['id'] ?? 0;
+                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` = ? AND `menu` = ?";
+                $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$id]);
+                $row_permision=$stmt_permision->fetchAllAssociative();
                 foreach ($row_permision as $row ) {
 
-                    $ar_per[$i][0] = $center = $row->center;
-                    $ar_per[$i][1] = $permision = $row->permision;
+                    $ar_per[$i][0] = $center = $row['center'];
+                    $ar_per[$i][1] = $permision = $row['permision'];
                     $i++;
                     $permision_sum += $permision;
                     $center_list .= ',' . $center;
