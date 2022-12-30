@@ -42,7 +42,7 @@ final class DataSourceName
     }
 
     /**
-     * Creates the object from the given DBAL connection parameters.
+     * Creates the object from the given Dbal connection parameters.
      *
      * @param array<string,mixed> $params
      */

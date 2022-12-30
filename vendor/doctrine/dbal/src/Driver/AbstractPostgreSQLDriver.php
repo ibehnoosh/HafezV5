@@ -47,7 +47,7 @@ abstract class AbstractPostgreSQLDriver implements VersionAwarePlatformDriver
         Deprecation::trigger(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5060',
-            'PostgreSQL 9 support is deprecated and will be removed in DBAL 4.'
+            'PostgreSQL 9 support is deprecated and will be removed in Dbal 4.'
                 . ' Consider upgrading to Postgres 10 or later.',
         );
 

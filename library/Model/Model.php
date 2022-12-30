@@ -2,12 +2,12 @@
 
 namespace App\Model;
 
-use App\Tools\Database;
+use App\Tools\Dbal;
 class Model
 {
     protected $DB;
     public function __construct()
     {
-        $this->DB= new Database();
+        $this->DB= (new Dbal())->connect();
     }
 }

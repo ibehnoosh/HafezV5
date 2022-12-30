@@ -575,7 +575,7 @@ class Table extends AbstractAsset
 
         $this->_fkConstraints[$name] = $constraint;
 
-        /* Add an implicit index (defined by the DBAL) on the foreign key
+        /* Add an implicit index (defined by the Dbal) on the foreign key
            columns. If there is already a user-defined index that fulfills these
            requirements drop the request. In the case of __construct() calling
            this method during hydration from schema-details, all the explicitly

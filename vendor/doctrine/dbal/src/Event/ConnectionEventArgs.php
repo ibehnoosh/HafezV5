@@ -6,7 +6,7 @@ use Doctrine\Common\EventArgs;
 use Doctrine\DBAL\Connection;
 
 /**
- * Event Arguments used when a Driver connection is established inside Doctrine\DBAL\Connection.
+ * Event Arguments used when a Driver connection is established inside Doctrine\Dbal\Connection.
  *
  * @deprecated
  */

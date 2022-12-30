@@ -142,7 +142,7 @@ class Connection
     protected $_schemaManager;
 
     /**
-     * The used DBAL driver.
+     * The used Dbal driver.
      *
      * @var Driver
      */
@@ -237,7 +237,7 @@ class Connection
     }
 
     /**
-     * Gets the DBAL driver instance.
+     * Gets the Dbal driver instance.
      *
      * @return Driver
      */
@@ -322,7 +322,7 @@ class Connection
     /**
      * Establishes the connection with the database.
      *
-     * @internal This method will be made protected in DBAL 4.0.
+     * @internal This method will be made protected in Dbal 4.0.
      *
      * @return bool TRUE if the connection was successfully established, FALSE if
      *              the connection is already open.
@@ -1134,7 +1134,7 @@ class Connection
      *  - Session control statements: ALTER SESSION, SET, DECLARE, etc.
      *  - Other statements that don't yield a row set.
      *
-     * This method supports PDO binding types as well as DBAL mapping types.
+     * This method supports PDO binding types as well as Dbal mapping types.
      *
      * @param string                                                               $sql    SQL statement
      * @param list<mixed>|array<string, mixed>                                     $params Statement parameters
@@ -1708,10 +1708,10 @@ class Connection
 
     /**
      * Converts a given value to its database representation according to the conversion
-     * rules of a specific DBAL mapping type.
+     * rules of a specific Dbal mapping type.
      *
      * @param mixed  $value The value to convert.
-     * @param string $type  The name of the DBAL mapping type.
+     * @param string $type  The name of the Dbal mapping type.
      *
      * @return mixed The converted value.
      *
@@ -1724,10 +1724,10 @@ class Connection
 
     /**
      * Converts a given value to its PHP representation according to the conversion
-     * rules of a specific DBAL mapping type.
+     * rules of a specific Dbal mapping type.
      *
      * @param mixed  $value The value to convert.
-     * @param string $type  The name of the DBAL mapping type.
+     * @param string $type  The name of the Dbal mapping type.
      *
      * @return mixed The converted type.
      *
@@ -1740,7 +1740,7 @@ class Connection
 
     /**
      * Binds a set of parameters, some or all of which are typed with a PDO binding type
-     * or DBAL mapping type, to a given statement.
+     * or Dbal mapping type, to a given statement.
      *
      * @param DriverStatement                                                      $stmt   Prepared statement
      * @param list<mixed>|array<string, mixed>                                     $params Statement parameters
@@ -1803,7 +1803,7 @@ class Connection
      * Gets the binding type of a given type.
      *
      * @param mixed                $value The value to bind.
-     * @param int|string|Type|null $type  The type to bind (PDO or DBAL).
+     * @param int|string|Type|null $type  The type to bind (PDO or Dbal).
      *
      * @return array{mixed, int} [0] => the (escaped) value, [1] => the binding type.
      *
@@ -1914,7 +1914,7 @@ class Connection
     }
 
     /**
-     * BC layer for a wide-spread use-case of old DBAL APIs
+     * BC layer for a wide-spread use-case of old Dbal APIs
      *
      * @deprecated This API is deprecated and will be removed after 2022
      *
@@ -1927,7 +1927,7 @@ class Connection
     }
 
     /**
-     * BC layer for a wide-spread use-case of old DBAL APIs
+     * BC layer for a wide-spread use-case of old Dbal APIs
      *
      * @deprecated This API is deprecated and will be removed after 2022
      */
@@ -1937,7 +1937,7 @@ class Connection
     }
 
     /**
-     * BC layer for a wide-spread use-case of old DBAL APIs
+     * BC layer for a wide-spread use-case of old Dbal APIs
      *
      * @deprecated This API is deprecated and will be removed after 2022
      */

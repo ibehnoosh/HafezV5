@@ -83,7 +83,7 @@ abstract class AbstractPlatform
      * Contains a list of all columns that should generate parseable column comments for type-detection
      * in reverse engineering scenarios.
      *
-     * @deprecated This property is deprecated and will be removed in Doctrine DBAL 4.0.
+     * @deprecated This property is deprecated and will be removed in Doctrine Dbal 4.0.
      *
      * @var string[]|null
      */
@@ -467,7 +467,7 @@ abstract class AbstractPlatform
     /**
      * Initializes the Doctrine Type comments instance variable for in_array() checks.
      *
-     * @deprecated This API will be removed in Doctrine DBAL 4.0.
+     * @deprecated This API will be removed in Doctrine Dbal 4.0.
      *
      * @return void
      */
@@ -476,7 +476,7 @@ abstract class AbstractPlatform
         Deprecation::triggerIfCalledFromOutside(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5058',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0.',
             __METHOD__,
         );
 
@@ -505,7 +505,7 @@ abstract class AbstractPlatform
         Deprecation::triggerIfCalledFromOutside(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5058',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0. Use Type::requiresSQLCommentHint() instead.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0. Use Type::requiresSQLCommentHint() instead.',
             __METHOD__,
         );
 
@@ -528,7 +528,7 @@ abstract class AbstractPlatform
         Deprecation::triggerIfCalledFromOutside(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5058',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0. Use Type::requiresSQLCommentHint() instead.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0. Use Type::requiresSQLCommentHint() instead.',
             __METHOD__,
         );
 
@@ -553,7 +553,7 @@ abstract class AbstractPlatform
         Deprecation::triggerIfCalledFromOutside(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5107',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0.',
             __METHOD__,
         );
 
@@ -572,7 +572,7 @@ abstract class AbstractPlatform
         Deprecation::triggerIfCalledFromOutside(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5107',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0.',
             __METHOD__,
         );
 
@@ -1762,7 +1762,7 @@ abstract class AbstractPlatform
      * ANSI SQL FOR UPDATE specification.
      *
      * @param string $fromClause The FROM clause to append the hint for the given lock mode to
-     * @param int    $lockMode   One of the Doctrine\DBAL\LockMode::* constants
+     * @param int    $lockMode   One of the Doctrine\Dbal\LockMode::* constants
      * @psalm-param LockMode::* $lockMode
      */
     public function appendLockHint(string $fromClause, int $lockMode): string
@@ -4487,7 +4487,7 @@ abstract class AbstractPlatform
     /**
      * Creates an instance of the reserved keyword list of this platform.
      *
-     * This method will become @abstract in DBAL 4.0.0.
+     * This method will become @abstract in Dbal 4.0.0.
      *
      * @throws Exception
      */

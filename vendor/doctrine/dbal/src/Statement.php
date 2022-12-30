@@ -10,7 +10,7 @@ use function func_num_args;
 use function is_string;
 
 /**
- * A database abstraction-level statement that implements support for logging, DBAL mapping types, etc.
+ * A database abstraction-level statement that implements support for logging, Dbal mapping types, etc.
  */
 class Statement
 {
@@ -78,14 +78,14 @@ class Statement
     /**
      * Binds a parameter value to the statement.
      *
-     * The value can optionally be bound with a DBAL mapping type.
-     * If bound with a DBAL mapping type, the binding type is derived from the mapping
+     * The value can optionally be bound with a Dbal mapping type.
+     * If bound with a Dbal mapping type, the binding type is derived from the mapping
      * type and the value undergoes the conversion routines of the mapping type before
      * being bound.
      *
      * @param string|int $param The name or position of the parameter.
      * @param mixed      $value The value of the parameter.
-     * @param mixed      $type  Either a PDO binding type or a DBAL mapping type name or instance.
+     * @param mixed      $type  Either a PDO binding type or a Dbal mapping type name or instance.
      *
      * @return bool TRUE on success, FALSE on failure.
      *
@@ -121,7 +121,7 @@ class Statement
     /**
      * Binds a parameter to a value by reference.
      *
-     * Binding a parameter by reference does not support DBAL mapping types.
+     * Binding a parameter by reference does not support Dbal mapping types.
      *
      * @deprecated Use {@see bindValue()} instead.
      *

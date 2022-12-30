@@ -10,7 +10,7 @@ use function array_search;
 use function in_array;
 
 /**
- * The type registry is responsible for holding a map of all known DBAL types.
+ * The type registry is responsible for holding a map of all known Dbal types.
  * The types are stored using the flyweight pattern so that one type only exists as exactly one instance.
  */
 final class TypeRegistry

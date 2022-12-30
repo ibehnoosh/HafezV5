@@ -586,7 +586,7 @@ SQL
                 $columnDefinition                  = $newColumn->toArray();
                 $columnDefinition['autoincrement'] = false;
 
-                // here was a server version check before, but DBAL API does not support this anymore.
+                // here was a server version check before, but Dbal API does not support this anymore.
                 $query = 'ALTER ' . $oldColumnName . ' TYPE ' . $type->getSQLDeclaration($columnDefinition, $this);
                 $sql[] = 'ALTER TABLE ' . $tableNameSQL . ' ' . $query;
             }

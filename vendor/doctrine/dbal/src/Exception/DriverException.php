@@ -23,7 +23,7 @@ class DriverException extends Exception implements TheDriverException
     /**
      * @internal
      *
-     * @param TheDriverException $driverException The DBAL driver exception to chain.
+     * @param TheDriverException $driverException The Dbal driver exception to chain.
      * @param Query|null         $query           The SQL query that triggered the exception, if any.
      */
     public function __construct(TheDriverException $driverException, ?Query $query)

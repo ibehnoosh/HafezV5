@@ -58,7 +58,7 @@ final class UserDefinedFunctions
         Deprecation::trigger(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5749',
-            'Relying on DBAL\'s emulated LOCATE() function is deprecated. '
+            'Relying on Dbal\'s emulated LOCATE() function is deprecated. '
                 . 'Use INSTR() or %s::getLocateExpression() instead.',
             AbstractPlatform::class,
         );

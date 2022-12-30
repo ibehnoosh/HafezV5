@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 
 /**
  * Driver interface.
- * Interface that all DBAL drivers must implement.
+ * Interface that all Dbal drivers must implement.
  */
 interface Driver
 {
@@ -44,7 +44,7 @@ interface Driver
     public function getSchemaManager(Connection $conn, AbstractPlatform $platform);
 
     /**
-     * Gets the ExceptionConverter that can be used to convert driver-level exceptions into DBAL exceptions.
+     * Gets the ExceptionConverter that can be used to convert driver-level exceptions into Dbal exceptions.
      */
     public function getExceptionConverter(): ExceptionConverter;
 }

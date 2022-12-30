@@ -182,7 +182,7 @@ class SqlitePlatform extends AbstractPlatform
     /**
      * {@inheritDoc}
      *
-     * The DBAL doesn't support databases on the SQLite platform. The expression here always returns a fixed string
+     * The Dbal doesn't support databases on the SQLite platform. The expression here always returns a fixed string
      * as an indicator of an implicitly selected database.
      *
      * @link https://www.sqlite.org/lang_select.html
@@ -367,9 +367,9 @@ class SqlitePlatform extends AbstractPlatform
      * Disables schema emulation.
      *
      * Schema emulation is enabled by default to maintain backwards compatibility.
-     * Disable it to opt-in to the behavior of DBAL 4.
+     * Disable it to opt-in to the behavior of Dbal 4.
      *
-     * @deprecated Will be removed in DBAL 4.0.
+     * @deprecated Will be removed in Dbal 4.0.
      */
     public function disableSchemaEmulation(): void
     {

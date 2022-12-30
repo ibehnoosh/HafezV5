@@ -29,7 +29,7 @@ final class Connection implements ServerInfoAwareConnection
     /**
      * Retrieves mysqli native resource handle.
      *
-     * Could be used if part of your application is not using DBAL.
+     * Could be used if part of your application is not using Dbal.
      *
      * @deprecated Call {@see getNativeConnection()} instead.
      */

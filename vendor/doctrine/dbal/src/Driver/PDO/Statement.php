@@ -140,7 +140,7 @@ final class Statement implements StatementInterface
     }
 
     /**
-     * Converts DBAL parameter type to PDO parameter type
+     * Converts Dbal parameter type to PDO parameter type
      *
      * @param int $type Parameter type
      *

@@ -127,7 +127,7 @@ class DB2Platform extends AbstractPlatform
         Deprecation::trigger(
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5058',
-            '%s is deprecated and will be removed in Doctrine DBAL 4.0. Use Type::requiresSQLCommentHint() instead.',
+            '%s is deprecated and will be removed in Doctrine Dbal 4.0. Use Type::requiresSQLCommentHint() instead.',
             __METHOD__,
         );
 

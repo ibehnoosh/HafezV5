@@ -124,7 +124,7 @@ final class DriverManager
 
     /**
      * Creates a connection object based on the specified parameters.
-     * This method returns a Doctrine\DBAL\Connection which wraps the underlying
+     * This method returns a Doctrine\Dbal\Connection which wraps the underlying
      * driver connection.
      *
      * $params must contain at least one of the following.
@@ -147,7 +147,7 @@ final class DriverManager
      *
      * <b>wrapperClass</b>:
      * You may specify a custom wrapper class through the 'wrapperClass'
-     * parameter but this class MUST inherit from Doctrine\DBAL\Connection.
+     * parameter but this class MUST inherit from Doctrine\Dbal\Connection.
      *
      * <b>driverClass</b>:
      * The driver class to use.
@@ -359,8 +359,8 @@ final class DriverManager
 
         $url['path'] = self::normalizeDatabaseUrlPath($url['path']);
 
-        // If we do not have a known DBAL driver, we do not know any connection URL path semantics to evaluate
-        // and therefore treat the path as regular DBAL connection URL path.
+        // If we do not have a known Dbal driver, we do not know any connection URL path semantics to evaluate
+        // and therefore treat the path as regular Dbal connection URL path.
         if (! isset($params['driver'])) {
             return self::parseRegularDatabaseUrlPath($url, $params);
         }

@@ -1,11 +1,8 @@
 <?php
 namespace App\Model;
-use App\Enums;
 
 class Person extends Model
 {
-    public Enums\educationStatus $educationStatus;
-
     private function list_fld(): array
     {
         $q = $this->DB->prepare("DESCRIBE person_info");
@@ -35,8 +32,6 @@ class Person extends Model
             $data[$filed] == '0000-00-00' ? $real_value = '' :$real_value = $data[$filed];
             $this->{$filed} = $real_value;
         }
-        print $this->degree_per;
-       print Enums\educationStatus::ms;
     }
 
 

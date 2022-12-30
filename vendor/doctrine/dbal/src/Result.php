@@ -259,7 +259,7 @@ class Result
     }
 
     /**
-     * BC layer for a wide-spread use-case of old DBAL APIs
+     * BC layer for a wide-spread use-case of old Dbal APIs
      *
      * @deprecated This API is deprecated and will be removed after 2022
      *
@@ -289,7 +289,7 @@ class Result
     }
 
     /**
-     * BC layer for a wide-spread use-case of old DBAL APIs
+     * BC layer for a wide-spread use-case of old Dbal APIs
      *
      * @deprecated This API is deprecated and will be removed after 2022
      *

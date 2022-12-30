@@ -13,7 +13,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use function func_num_args;
 
 /**
- * Configuration container for the Doctrine DBAL.
+ * Configuration container for the Doctrine Dbal.
  */
 class Configuration
 {

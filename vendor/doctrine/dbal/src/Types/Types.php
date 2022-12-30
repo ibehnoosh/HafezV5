@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\DBAL\Types;
 
 /**
- * Default built-in types provided by Doctrine DBAL.
+ * Default built-in types provided by Doctrine Dbal.
  */
 final class Types
 {

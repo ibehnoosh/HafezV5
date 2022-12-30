@@ -3,7 +3,7 @@
 namespace Doctrine\DBAL;
 
 /**
- * Container for all DBAL events.
+ * Container for all Dbal events.
  *
  * This class cannot be instantiated.
  *

@@ -120,7 +120,7 @@ final class Statement implements StatementInterface
     }
 
     /**
-     * Converts DBAL parameter type to oci8 parameter type
+     * Converts Dbal parameter type to oci8 parameter type
      */
     private function convertParameterType(int $type): int
     {

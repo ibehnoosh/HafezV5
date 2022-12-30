@@ -57,7 +57,7 @@ class QueryBuilder
     public const STATE_CLEAN = 1;
 
     /**
-     * The DBAL Connection.
+     * The Dbal Connection.
      */
     private Connection $connection;
 
@@ -136,7 +136,7 @@ class QueryBuilder
     /**
      * Initializes a new <tt>QueryBuilder</tt>.
      *
-     * @param Connection $connection The DBAL Connection.
+     * @param Connection $connection The Dbal Connection.
      */
     public function __construct(Connection $connection)
     {
@@ -184,7 +184,7 @@ class QueryBuilder
     }
 
     /**
-     * Gets the associated DBAL Connection for this query builder.
+     * Gets the associated Dbal Connection for this query builder.
      *
      * @deprecated Use the connection used to instantiate the builder instead.
      *

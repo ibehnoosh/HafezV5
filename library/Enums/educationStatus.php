@@ -9,7 +9,7 @@ enum educationStatus: int
     case ms = 4;
     case phd =5;
 
-    public static function toString(educationStatus $status): string
+    public static function toString(educationStatus $status)
     {
         return match ($status) {
             self::diploma => 'دیپلم',
@@ -17,8 +17,6 @@ enum educationStatus: int
             self::bs => 'لیسانس',
             self::ms => 'فوق لیسانس',
             self::phd => 'دکترا',
-            default => ''
-
         };
     }
 }
