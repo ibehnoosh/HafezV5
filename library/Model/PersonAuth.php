@@ -14,7 +14,7 @@ class PersonAuth extends Model
         $sql=<<<SQL
             SELECT `p_menu_group`.`id`,`p_menu_group`.`name`,`icon`
             FROM `p_person_access`, `p_menu_option`,`p_menu_group`
-            WHERE `person` = :id
+            WHERE `person` = ?
               AND `permision`>0
               AND `p_menu_option`.`id`=`p_person_access`.`menu`
               AND `p_menu_option`.`group`=`p_menu_group`.`id`
@@ -22,30 +22,28 @@ class PersonAuth extends Model
             ORDER BY `p_menu_group`.`order` ASC
         SQL;
 
-        $stmt = $this->DB->prepare($sql);
-        $stmt->execute(['id'=>$id]);
-        $data=$stmt->fetchAll(\PDO::FETCH_OBJ);
+        $stmt = $this->DB->executeQuery($sql , [$id]);
+        $data=$stmt->fetchAllAssociative();
 
 
         foreach ($data as $row) {
 
-            $stmtUrl= $this->DB->prepare("SELECT `group` FROM `p_menu_option` WHERE `url`=:url");
-            $stmtUrl->execute(['url'=> $url]);
-            $dataUrl=$stmtUrl->fetchAll(\PDO::FETCH_OBJ);
+            $stmtUrl= $this->DB->executeQuery("SELECT `group` FROM `p_menu_option` WHERE `url`=?",[$url]);
+            $dataUrl=$stmtUrl->fetchAllAssociative();
             foreach ($dataUrl as $valUrl)
             {
-                ($row->id == $valUrl->group) ?? $class='active open';
+                ($row['id'] == $valUrl['group']) ?? $class='active open';
             }
             $output.= <<<HTML
                             <li class="nav-item {$class}">
                             <a href="#" class="nav-link nav-toggle">
-                               <i class=" {$row->icon}"></i>
-                                <span class="title">{$row->name}</span>
+                               <i class=" {$row['icon']}"></i>
+                                <span class="title">{$row['name']}</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
                             HTML;
-            $output.=$this->showSubmenu($row->id, $id, $url);
+            $output.=$this->showSubmenu($row['id'], $id, $url);
             $output.= '</ul>
             </li>';
         }

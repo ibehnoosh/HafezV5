@@ -11,8 +11,8 @@
 <div class="page-content">
     <div class="tiles">
         <?php
-$notification = new notification;
-print $notification->show($_SESSION[PREFIXOFSESS . 'idp']);
+//$notification = new notification;
+//print $notification->show($_SESSION[PREFIXOFSESS . 'idp']);
 ?>
     </div>
     <div class="note note-info">

@@ -3,32 +3,35 @@ namespace App\Model;
 
 class Person extends Model
 {
-    private function list_fld(): array
+    private function list_fld() :array
     {
-        $q = $this->DB->prepare("DESCRIBE person_info");
-        $q->execute();
-        $table_fields = $q->fetchAll();
-
-        return $table_fields;
+        $sm = $this->DB->getSchemaManager();
+        $columns=  $sm->listTableColumns("person_info");
+        return $columns;
     }
     private function createProperties():void
     {
         $fld = $this->list_fld();
         foreach($fld as $column)
         {
-            $filed=$column['Field'];
+            $filed=$column->getName();
             $this->{$filed};
         }
     }
     public function show(int $id ): void
     {
         $fld = $this->list_fld();
-        $stmt= $this->DB->prepare("select * from person_info where  id_per = :id");
-        $stmt->execute(['id'=>$id]);
-        $data=$stmt->fetch();
+        $queryBuilder = $this->DB->createQueryBuilder();
+        $queryBuilder
+            ->select('*')
+            ->from('person_info')
+            ->where('id_per = ?')
+            ->setParameter(0, $id);
+        $data=$queryBuilder->fetchAssociative();
+
         foreach($fld as $column)
         {
-            $filed=$column['Field'];
+            $filed=$column->getName();
             $data[$filed] == '0000-00-00' ? $real_value = '' :$real_value = $data[$filed];
             $this->{$filed} = $real_value;
         }
