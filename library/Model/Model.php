@@ -13,13 +13,5 @@ class Model
 
 
 
-    function selectOption(array $data, string $selected): string
-    {
-        $out='';
-        foreach ($data as $key => $value)
-        {
-            ($key == $selected) ? $out.='<option value="'.$key.'" serlected>'.$value.'</option>' : $out.='<option value="'.$key.'">'.$value.'</option>' ;
-        }
-        return $out;
-    }
+
 }

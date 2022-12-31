@@ -1,16 +1,9 @@
-<div class="page-content">
-	<div class="note note-info"><strong>ثبت مشخصات پرسنل</strong></div>
-<div class="tabbable-line">
 <?php
-if(!$access)
-{
-	print '<h1>No Access</h1>';
-	print '<h1>Your IP Is: '.$_SERVER['REMOTE_ADDR'].'</h1>';
-}
-else
-{	
-	
-	$basic=new basic;
+$TITLE= require '../Lang/User.php';
+print (\View\General\Title::show(['title' => $TITLE['addInfo'] , 'description'=> '']));
+$basicInfo=new App\Basic\basicInfo();
+$basicView= new App\Basic\basicView();
+
 if($_POST['add_personal'])
 {
 	//****************************************************
@@ -83,5 +76,3 @@ if($_POST['add_personal'])
 		}
 		
 }
-}
-?>
