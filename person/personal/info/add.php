@@ -2,6 +2,9 @@
     $TITLE= require '../Lang/User.php';
     print (\View\Js\User::addInfo('scripts/personal_info_add.js'));
     print (\View\General\Title::show(['title' => $TITLE['addInfo'] , 'description'=> '']));
+    $degree=new App\Enums\basicInfo();
+    $model=new App\Model\Model();
+    $degree=$model->selectOption($degree->degree(),$_SESSION[PREFIXOFSESS.'degree_per'] ?? '' )
 ?>
 <div class="tabbable-line">
     <div class="form-body">
@@ -49,14 +52,10 @@
             </div>
             <div class="form-group col-md-6"><label class="col-md-4 control-label"> مدرك تحصیلی</label>
                 <div class="col-md-6">
-                    <select name="degree_per" class="form-control">
-                      <option value=""> انتخاب </option>
-                      <option value="1" <?php ($_SESSION[PREFIXOFSESS.'degree_per']== '1') ?? 'selected="selected" '; ?>>دیپلم</option>
-                      <option value="2" <?php ($_SESSION[PREFIXOFSESS.'degree_per']== '2') ?? 'selected="selected" '; ?>>فوق دیپلم</option>
-                      <option value="3" <?php ($_SESSION[PREFIXOFSESS.'degree_per']== '3') ?? 'selected="selected" '; ?>>لیسانس</option>
-                      <option value="4" <?php ($_SESSION[PREFIXOFSESS.'degree_per']== '4') ?? 'selected="selected" '; ?>>فوق لیسانس</option>
-                      <option value="5" <?php ($_SESSION[PREFIXOFSESS.'degree_per']== '5') ?? 'selected="selected" '; ?>>دكترا</option>
-                    </select>
+                        <select name="degree_per" class="form-control">
+                          <option value=""> انتخاب </option>
+                            <?=$degree?>
+                        </select>
                 </div>
             </div>
             <div class="form-group col-md-6"><label class="col-md-4 control-label">جنسیت</label>

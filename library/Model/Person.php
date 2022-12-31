@@ -3,6 +3,7 @@ namespace App\Model;
 
 class Person extends Model
 {
+
     private function list_fld() :array
     {
         $sm = $this->DB->getSchemaManager();
@@ -36,7 +37,6 @@ class Person extends Model
             $this->{$filed} = $real_value;
         }
     }
-
 
 
     public function per_of_center($arr, $value, $numofi) // با دادن ارایه و مرکز مشخص میکنیم چه پرمیشنی داره

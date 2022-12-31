@@ -12,14 +12,15 @@ class PersonAuth extends Model
         $class='';$output='';
 
         $sql=<<<SQL
-            SELECT `p_menu_group`.`id`,`p_menu_group`.`name`,`icon`
+        SELECT * FROM (
+            SELECT `p_menu_group`.`id`,`p_menu_group`.`name`,`icon`,`p_menu_group`.`order`
             FROM `p_person_access`, `p_menu_option`,`p_menu_group`
             WHERE `person` = ?
               AND `permision`>0
               AND `p_menu_option`.`id`=`p_person_access`.`menu`
               AND `p_menu_option`.`group`=`p_menu_group`.`id`
-            GROUP BY `p_menu_group`.`id`
-            ORDER BY `p_menu_group`.`order` ASC
+            GROUP BY `p_menu_group`.`id`) AS `temp`
+            ORDER BY `temp`.`order`
         SQL;
 
         $stmt = $this->DB->executeQuery($sql , [$id]);
