@@ -83,10 +83,11 @@ class PersonAuth extends Model
         $permision=0;
         if(isset($menu))
         {
-            $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like ?";
+           $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like ?";
             $stmt= $this->DB->executeQuery($sql,[$menu]);
-            $res=$stmt->fetchAssociative();
-            if ($res && $res['id'] == 0) {
+            $res=$stmt->fetchAllAssociative();
+            $id = $res['id'] ?? 0; 
+            if ($id == 0) {
                 $i = 0;
                 $permision_sum = 0;
                 $center_list = '0';
@@ -94,10 +95,11 @@ class PersonAuth extends Model
                 $sql_submenu="SELECT `parent` FROM `p_menu_sub` WHERE `url` like ?";
                 $stmt_submenu= $this->DB->executeQuery($sql_submenu,[$menu]);
                 $row_parent=$stmt_submenu->fetchAssociative();
-                var_dump($row_parent);
-                if ($row_parent) {
+                $parent= $row_parent['parent'] ?? 0;
+                if ($parent > 0) {
+
                     $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
-                    $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$menu]);
+                    $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$parent]);
                     $row_permision=$stmt_permision->fetchAllAssociative();
                     foreach ($row_permision as $row ) {
                         $ar_per[$i][0] = $center = $row['center'];
@@ -111,16 +113,17 @@ class PersonAuth extends Model
                     $permision = 0;
                 }
 
-            } else
+            }
+            else
             {
                 $i = 0;
                 $permision_sum = 0;
                 $center_list = '0';
                 $ar_per = array();
-                $id = $res['id'] ?? 0;
-                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` = ? AND `menu` = ?";
+                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
                 $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$id]);
                 $row_permision=$stmt_permision->fetchAllAssociative();
+
                 foreach ($row_permision as $row ) {
 
                     $ar_per[$i][0] = $center = $row['center'];
