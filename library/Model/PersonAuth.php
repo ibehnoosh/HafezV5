@@ -83,33 +83,21 @@ class PersonAuth extends Model
         $permision=0;
         if(isset($menu))
         {
+            $i = 0;
+            $permision_sum = 0;
+            $center_list = '0';
+            $ar_per = array();
            $sql="SELECT `id` FROM `p_menu_option` WHERE `url` like ?";
             $stmt= $this->DB->executeQuery($sql,[$menu]);
             $res=$stmt->fetchAllAssociative();
             $id = $res['id'] ?? 0; 
             if ($id == 0) {
-                $i = 0;
-                $permision_sum = 0;
-                $center_list = '0';
-                $ar_per = array();
                 $sql_submenu="SELECT `parent` FROM `p_menu_sub` WHERE `url` like ?";
                 $stmt_submenu= $this->DB->executeQuery($sql_submenu,[$menu]);
                 $row_parent=$stmt_submenu->fetchAssociative();
                 $parent= $row_parent['parent'] ?? 0;
                 if ($parent > 0) {
-                    $ar_per=$this->checkSubmenu($person,$parent);
-                    /*
-                    $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
-                    $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$parent]);
-                    $row_permision=$stmt_permision->fetchAllAssociative();
-                    foreach ($row_permision as $row ) {
-                        $ar_per[$i][0] = $center = $row['center'];
-                        $ar_per[$i][1] = $permision = $row['permision'];
-                        $i++;
-                        $permision_sum += $permision;
-                        $center_list .= ',' . $center;
-                    }
-                    */
+                    list($ar_per,$i,$permision_sum,$center_list)=$this->checkSubmenu($person,$parent);
                 }
                 else {
                     $permision = 0;
@@ -117,21 +105,7 @@ class PersonAuth extends Model
             }
             else
             {
-                $i = 0;
-                $permision_sum = 0;
-                $center_list = '0';
-                $ar_per = array();
-                $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
-                $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$id]);
-                $row_permision=$stmt_permision->fetchAllAssociative();
-                foreach ($row_permision as $row ) {
-
-                    $ar_per[$i][0] = $center = $row['center'];
-                    $ar_per[$i][1] = $permision = $row['permision'];
-                    $i++;
-                    $permision_sum += $permision;
-                    $center_list .= ',' . $center;
-                }
+                list($ar_per,$i,$permision_sum,$center_list)=$this->checkSubmenu($person,$id);
             }
         }
         else {
@@ -160,6 +134,6 @@ class PersonAuth extends Model
             $permision_sum += $permision;
             $center_list .= ',' . $center;
         }
-        return $ar_per;
+        return array($ar_per,$i,$permision_sum,$center_list);
     }
 }
