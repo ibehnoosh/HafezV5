@@ -97,7 +97,8 @@ class PersonAuth extends Model
                 $row_parent=$stmt_submenu->fetchAssociative();
                 $parent= $row_parent['parent'] ?? 0;
                 if ($parent > 0) {
-
+                    $ar_per=$this->checkSubmenu($person,$parent);
+                    /*
                     $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
                     $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$parent]);
                     $row_permision=$stmt_permision->fetchAllAssociative();
@@ -108,11 +109,11 @@ class PersonAuth extends Model
                         $permision_sum += $permision;
                         $center_list .= ',' . $center;
                     }
+                    */
                 }
                 else {
                     $permision = 0;
                 }
-
             }
             else
             {
@@ -123,7 +124,6 @@ class PersonAuth extends Model
                 $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
                 $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$id]);
                 $row_permision=$stmt_permision->fetchAllAssociative();
-
                 foreach ($row_permision as $row ) {
 
                     $ar_per[$i][0] = $center = $row['center'];
@@ -143,4 +143,23 @@ class PersonAuth extends Model
 
     }
 
+    function checkSubmenu(int $person,int $parent): array
+    {
+        $i = 0;
+        $permision_sum = 0;
+        $center_list = '0';
+        $ar_per = array();
+
+        $sql_permision="SELECT `permision`,`center` FROM `p_person_access` WHERE `permision` > 0 AND `person` =? AND `menu` = ?";
+        $stmt_permision= $this->DB->executeQuery($sql_permision,[$person,$parent]);
+        $row_permision=$stmt_permision->fetchAllAssociative();
+        foreach ($row_permision as $row ) {
+            $ar_per[$i][0] = $center = $row['center'];
+            $ar_per[$i][1] = $permision = $row['permision'];
+            $i++;
+            $permision_sum += $permision;
+            $center_list .= ',' . $center;
+        }
+        return $ar_per;
+    }
 }
